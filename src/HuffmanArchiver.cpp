@@ -26,7 +26,7 @@ bool HuffmanArchiver::compress(const std::vector<std::string>& sources, const st
     try {
         for (const auto& source : sources) {
             if (!fs::exists(source)) {
-                std::cerr << "错误: 文件不存在: " << source << std::endl;
+                std::cerr << "ERORR: 文件不存在: " << source << std::endl;
                 return false;
             }
         }
@@ -39,27 +39,22 @@ bool HuffmanArchiver::compress(const std::vector<std::string>& sources, const st
 
         // 检查输出文件是否已经存在
         if (fs::exists(actualOutput)) {
-            std::cout << "警告: 输出文件已存在: " << actualOutput
+            std::cout << "WARNNING: 输出文件已存在: " << actualOutput
                 << "\n是否确认覆盖? (y/n): ";
             char confirm;
             std::cin >> confirm;
             if (confirm != 'y' && confirm != 'Y') {
-                std::cout << "操作已取消" << std::endl;
                 return false;
             }
         }
-
-        std::cout << "压缩中..." << std::endl;
 
         // 打包并压缩数据
         std::vector<uint8_t> packedData = packer->pack(sources);
         fileCompressor->compressToFile(packedData, actualOutput);
 
-        std::cout << "压缩完成: " << actualOutput << std::endl;
-
         return true;
     } catch (const std::exception& e) {
-        std::cerr << "压缩失败: " << e.what() << std::endl;
+        std::cerr << "ERORR: " << e.what() << std::endl;
         return false;
     }
 }
@@ -68,7 +63,7 @@ bool HuffmanArchiver::decompress(const std::string& source,
                                  const std::string& output) {
     try {
         if (!fs::exists(source)) {
-            std::cerr << "错误: 压缩文件不存在: " << source << std::endl;
+            std::cerr << "ERORR: 压缩文件不存在: " << source << std::endl;
             return false;
         }
 
@@ -85,17 +80,14 @@ bool HuffmanArchiver::decompress(const std::string& source,
 
         // 检查输出路径是否已存在
         if (fs::exists(actualOutput)) {
-            std::cout << "警告: 输出路径已存在: " << actualOutput
+            std::cout << "WARNNING: 输出路径已存在: " << actualOutput
                 << "\n是否确认覆盖? (y/n): ";
             char confirm;
             std::cin >> confirm;
             if (confirm != 'y' && confirm != 'Y') {
-                std::cout << "操作已取消" << std::endl;
                 return false;
             }
         }
-
-        std::cout << "解压中..." << std::endl;
 
         // 从文件解压数据
         std::vector<uint8_t> packedData;
@@ -103,13 +95,11 @@ bool HuffmanArchiver::decompress(const std::string& source,
 
         // 解包数据
         packer->unpack(packedData, actualOutput);
-
-        std::cout << "解压完成: " << actualOutput << std::endl;
         
         return true;
 
     } catch (const std::exception& e) {
-        std::cerr << "解压失败: " << e.what() << std::endl;
+        std::cerr << "ERORR: " << e.what() << std::endl;
         return false;
     }
 }
@@ -119,14 +109,8 @@ std::string HuffmanArchiver::getVersion() {
 }
 
 void HuffmanArchiver::printInfo() {
-    std::cout << "======================================" << std::endl;
-    std::cout << "  哈夫曼编码解压缩工具 v" << getVersion() << std::endl;
-    std::cout << "======================================" << std::endl;
-    std::cout << "基于哈夫曼编码的文件/目录压缩工具" << std::endl;
-    std::cout << "支持功能:" << std::endl;
-    std::cout << "  - 文件压缩/解压" << std::endl;
-    std::cout << "  - 目录压缩/解压（包含子目录）" << std::endl;
-    std::cout << "======================================" << std::endl;
+    std::string info = "哈夫曼编码解压缩工具 v" + getVersion();
+    std::cout << info << std::endl;
 }
 
 }
