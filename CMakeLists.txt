@@ -10,7 +10,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -O2")
 
 # 设置头文件目录
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/include
+                    ${CMAKE_SOURCE_DIR}/include/thirdparty)
 
 # 定义源文件列表（排除 DirectoryCompressor 相关文件）
 set(SOURCES
@@ -24,17 +25,3 @@ set(SOURCES
 
 # 添加可执行文件
 add_executable(huffman_compressor ${SOURCES})
-
-# 设置安装规则
-install(TARGETS huffman_compressor DESTINATION bin)
-
-# 可选：设置调试版本的额外选项
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fsanitize=address")
-endif()
-
-# 输出构建信息
-message(STATUS "Project: ${PROJECT_NAME}")
-message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
-message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
-message(STATUS "Compiler Flags: ${CMAKE_CXX_FLAGS}")

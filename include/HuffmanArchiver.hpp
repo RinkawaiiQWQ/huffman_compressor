@@ -8,26 +8,23 @@
 
 namespace huffman {
 
-// 进度回调函数类型定义
-typedef std::function<void(const std::string& currentFile,
-                           size_t current, 
-                           size_t total)> ProgressCallback;
-
 // 哈夫曼压缩主类
 class HuffmanArchiver {
 private:
     std::unique_ptr<Packer> packer;
     std::unique_ptr<FileCompressor> fileCompressor;
+
+    void setVerbose(bool verbose);
     
     // 获取文件扩展名
-    std::string getExtension(const std::string& path);
+    static std::string getExtension(const std::string& path);
     
     // 移除文件扩展名
-    std::string removeExtension(const std::string& path);
+    static std::string removeExtension(const std::string& path);
 
 public:
     HuffmanArchiver();
-    ~HuffmanArchiver();
+    ~HuffmanArchiver() = default;
 
     // 压缩文件或目录
     // sources: 源文件或目录路径列表

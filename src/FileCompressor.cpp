@@ -5,7 +5,7 @@
 
 namespace huffman {
 
-auto FileCompressor::readFile(const std::string& filename) -> std::vector<uint8_t> {
+std::vector<uint8_t> FileCompressor::readFile(const std::string& filename) {
     std::ifstream file(filename, std::ios::binary | std::ios::ate);
     if (!file) {
         throw std::runtime_error("open file failed: " + filename);
@@ -39,7 +39,7 @@ void FileCompressor::setHeader(uint16_t treeSize, uint64_t originalSize, uint64_
     header.compressedSize = compressedSize;
 }
 
-void FileCompressor::setHeader(const std::vector<uint8_t>& compressedData) {
+void FileCompressor::readHeader(const std::vector<uint8_t>& compressedData) {
     if (compressedData.size() < HEADER_SIZE) {
         throw std::runtime_error("invalid compressed data");
     }

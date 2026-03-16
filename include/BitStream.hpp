@@ -4,8 +4,6 @@
 #include <vector>
 #include <string>
 #include <cstdint>
-#include <fstream>
-#include <stdexcept>
 
 namespace huffman {
 
@@ -13,7 +11,7 @@ class BitOutputStream {
 private:
     std::vector<uint8_t> buffer; // 字节缓冲区
     uint8_t currentByte;         // 当前正在写入的字节
-    int bitCount;                  // 当前字节中已写入的位数
+    int bitCount;                // 当前字节中已写入的位数
 
 public:
     BitOutputStream();

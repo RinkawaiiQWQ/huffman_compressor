@@ -10,9 +10,14 @@ constexpr const char* VERSION = "1.0.0";
 constexpr const char* FILE_EXTENSION = ".huff";
 
 HuffmanArchiver::HuffmanArchiver()
-    : fileCompressor(std::make_unique<FileCompressor>())
+    : packer(std::make_unique<Packer>())
+    , fileCompressor(std::make_unique<FileCompressor>())
 {}
 
+void HuffmanArchiver::setVerbose(bool verbose) {
+    packer.setVerbose(verbose);
+    fileCompressor.setVerbose(verbose);
+}
 
 std::string HuffmanArchiver::getExtension(const std::string& path) {
     return fs::path(path).extension().string();

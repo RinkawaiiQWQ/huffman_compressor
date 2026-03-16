@@ -47,11 +47,11 @@ private:
     std::unordered_map<std::vector<bool>, uint8_t, VectorBoolHash> reverseCodeTable;
 
     // 递归生成编码表
-    void generateCodes(std::shared_ptr<HuffmanNode> node,
-        std::vector<bool>& currentCode);
+    void generateCodes(const std::shared_ptr<HuffmanNode>& node,
+                       std::vector<bool>& currentCode);
 
     // 序列化树到字节数组
-    void serializeTree(std::shared_ptr<HuffmanNode> node,
+    void serializeTree(const std::shared_ptr<HuffmanNode>& node,
         std::vector<uint8_t>& output) const;
 
     // 反序列化树

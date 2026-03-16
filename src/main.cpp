@@ -10,27 +10,36 @@ int main(int argc, char* argv[]) {
     try {
         CLI::App app{"A Huffman compression tool"};
 
-        std::string outputPath;
-
         // 压缩子命令
         auto compressCmd = app.add_subcommand("compress", "Compress files or folders");
+        
         std::vector<std::string> sources;
         compressCmd->add_option("sources", sources)->expected(1, -1);
-        compressCmd->add_option("-o,--output", outputPath)->required();
 
         // 解压子命令
-        auto extraCmd = app.add_subcommand("x,extra", "Extea from the archive");
+        auto extraCmd = app.add_subcommand("extra", "Extea from archive");
         std::string source;
         extraCmd->add_option("source", source)->required();
-        extraCmd->add_option("-o,--output", outputPath)->required();
+        
+        // 输出参数
+        std::string outputPath;
+        app.add_option("-o,--output", outputPath);
 
+        bool verbose = false;
+        compressCmd->add_flag("-v,--verbose", verbose);
+        extraCmd->add_flag("-v,--verbose", verbose);
 
         // 解析命令行参数
         CLI11_PARSE(app, argc, argv);
 
-        bool isSuccess = true;
         HuffmanArchiver archiver;
 
+        if (verbose) {
+            archiver
+        }
+
+        bool isSuccess = true;
+        
         if (compressCmd->parsed()) {
             isSuccess = archiver.compress(sources, outputPath);
         } else if (extraCmd->parsed()) {
